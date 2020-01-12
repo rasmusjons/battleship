@@ -6,6 +6,15 @@
     font-size: small;
 }
 
+
+.gridsquaresComputer {
+    display: inline-block;
+    width: 60px;
+    height: 60px;
+    border: solid black;
+    font-size: small;
+}
+
 .gridsquares:hover {
     background: red
 }

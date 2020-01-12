@@ -1,7 +1,7 @@
 import { ship } from './ShipFactory';
 import { gameboard } from './Gameboard';
 
-let runPlacingPhase = false
+let runPlacingPhase = true
 let currentDirection = true
 let indexarray = []
 let currentShip = 1
@@ -22,6 +22,8 @@ let board = gameboard();
 //grid creation--------------
 
 let container = document.querySelector('#container');
+
+let containerComputer = document.querySelector('#containerComputer');
 
 function createGrid(idName) {
     const element = document.createElement('div');
@@ -44,8 +46,6 @@ function removeGrid() {
 
 
 
-
-
 function updateGrid () {
 board.grid.forEach(e => {
     e.forEach(e2 => {
@@ -53,6 +53,31 @@ board.grid.forEach(e => {
     });
 });
 }
+
+
+
+function createComputerGrid(idName) {
+    const element = document.createElement('div');
+
+    element.setAttribute('class', 'gridsquaresComputer');
+    element.setAttribute('id', + idName);
+    element.innerHTML = idName  
+
+    return containerComputer.appendChild(element);
+}
+
+
+function renderComputerGrid () {
+    board.grid.forEach(e => {
+        e.forEach(e2 => {
+            createComputerGrid(e2, board.grid);
+        });
+    });
+    }
+    
+    
+
+
 //-----------------------grid creation
 
 
@@ -119,10 +144,10 @@ directionButton.addEventListener("click", function () {
 })
 
 
+//PLACERAR UT SKEPPEN. En tre skepps varian.t 
 const confirmButton = document.getElementById("confirmButton");
 const confirmText = document.getElementById("confirmText");
 confirmButton.addEventListener("click", function () {
-    
     switch (currentShip) {
         case 1: 
             placeShip(carrier, indexarray[0], indexarray[1], currentDirection) 
@@ -137,6 +162,7 @@ confirmButton.addEventListener("click", function () {
         case 3: 
             placeShip(cruiser, indexarray[4], indexarray[5], currentDirection) 
             currentShip++  
+            runPlacingPhase = false      // avslutar placerings fasen 
             break;              
     }    
 })
@@ -146,6 +172,7 @@ confirmButton.addEventListener("click", function () {
 
 //game running
 updateGrid();
+renderComputerGrid()
 
 getSquareNumber(findIndex);
 
