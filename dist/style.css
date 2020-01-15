@@ -1,24 +1,45 @@
-.gridsquares {
-    display: inline-block;
-    width: 60px;
-    height: 60px;
-    border: solid black;
-    font-size: small;
+body {
+    background: #37565d;
+    color: white;
 }
 
+.gridsquares {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    border: solid white 1px;
+    font-size: small;
+    padding: 15px;
+    text-align: center;
+}
 
 .gridsquaresComputer {
     display: inline-block;
-    width: 60px;
-    height: 60px;
-    border: solid black;
+    width: 40px;
+    height: 40px;
+    border: solid white 1px;
     font-size: small;
+    padding: 15px;
+    text-align: center;
 }
 
 .gridsquares:hover {
-    background: red
+    background: coral;
+    cursor: pointer;
+}
+
+.gridsquaresComputer:hover {
+    background: coral;
+    cursor: pointer;
 }
 
 #confirmText {
-    display: none;
+    border: solid white 1px;
+    width: 400px;
+    height: 40px;
+}
+
+button {
+    padding: 15px;
+    margin: 30px;
 }

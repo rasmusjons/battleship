@@ -1,0 +1,40 @@
+det går att placer aut båtar.
+1. fixa så att 
+   a) inte sticker ut - CHECK
+   b) inte överlappar - CHECK
+   c) horizontellt fungerar - CHECK
+    d) datorns båtar placeras ut 
+
+
+
+function placeComputerShip(ship) {
+    let y = Math.floor(Math.random() * 10);
+    let x = Math.floor(Math.random() * 10);
+    let verticalDirection = Math.random() >= 0.5;
+    let length = ship.getLife();
+
+    if (length + y > arrayLength || length + x > arrayLength) {
+        let y = Math.floor(Math.random() * 10);
+        let x = Math.floor(Math.random() * 10);
+    }
+
+    if (!Number.isInteger(computerBoard.grid[y][x])) {
+        alert('occupado!');
+        return;
+    }
+
+    if (!verticalDirection) {
+        for (let i = 0; i < length; i++) {
+            computerBoard.grid[y][x + i] = ship.getName();
+        }
+        currentShip++;
+    } else {
+        for (let i = 0; i < length; i++) {
+            computerBoard.grid[y + i][x] = ship.getName();
+        }
+        currentShip++;
+    }
+
+    removeComputerGrid();
+    renderComputerGrid();
+}

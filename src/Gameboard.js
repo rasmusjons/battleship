@@ -9,59 +9,40 @@ const gameboard = () => {
         [61, 62, 63, 64, 65, 66, 67, 68, 69, 70],
         [71, 72, 73, 74, 75, 76, 77, 78, 79, 80],
         [81, 82, 83, 84, 85, 86, 87, 88, 89, 90],
-        [91, 92, 93, 94, 95, 96, 97, 98, 99, 100]
+        [91, 92, 93, 94, 95, 96, 97, 98, 99, 100],
     ];
 
-    let indexarray = []
+    let indexarray = [];
 
-    let findIndex = (number) => { 
-     console.log(grid.length)
-        for (let i = 0; i < grid.length; i++){   
-                let index = grid[i].indexOf(number)
+    let findIndex = number => {
+        console.log(grid.length);
+        for (let i = 0; i < grid.length; i++) {
+            let index = grid[i].indexOf(number);
 
-                if (index > -1) {
-                    console.log(index + " IF")
+            if (index > -1) {
+                console.log(index + ' IF');
 
-                    indexarray.push(i)
-                    indexarray.push(index)
-            
-                    console.log(indexarray)
-                    return indexarray
-                        
-                  }                
-            }  
-    }
+                indexarray.push(i);
+                indexarray.push(index);
 
-    let hit = (number) => {
-        let index = findIndex(number)
-        
-      
-        if (grid[index[0]][index[1]] != "X") {
-            grid[index[0]][index[1]]= "X"
-
-        } else console.log("error")
-
-        return gridSquares
-
-    }
-
-    let placeShip = (ship, numberToReplace) => {
-
-        let y = findIndex(numberToReplace)
-        console.log(y[0]) 
-        console.log(y[1])    
-   
-         for (let j = 0; j < length; j++) {             
-             grid[index[0]][index[1]] = 'O';
-             numberToReplace++;
-
-         }
+                console.log(indexarray);
+                return indexarray;
+            }
+        }
     };
 
-    return { findIndex, hit, grid, placeShip };
+    let hit = number => {
+        let index = findIndex(number);
+
+        if (grid[index[0]][index[1]] != 'X') {
+            grid[index[0]][index[1]] = 'X';
+        } else console.log('error');
+
+        return gridSquares;
+    };
+
+    return { findIndex, hit, grid };
 };
 
 //module.exports = gameboard;
- export {
-   gameboard
-}
+export { gameboard };
