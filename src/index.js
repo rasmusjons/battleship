@@ -15,6 +15,7 @@ const destroyer = ship('Destroyer', 2);
 
 //skapar brädet
 let board = gameboard();
+let computerBoard = gameboard();
 
 //grid creation--------------
 
@@ -40,6 +41,14 @@ function removeGrid() {
     }
 }
 
+function removeComputerGrid() {
+    const element = document.getElementsByClassName('gridsquaresComputer');
+
+    while (element[0]) {
+        element[0].parentNode.removeChild(element[0]);
+    }
+}
+
 function updateGrid() {
     board.grid.forEach(e => {
         e.forEach(e2 => {
@@ -58,10 +67,10 @@ function createComputerGrid(idName) {
     return containerComputer.appendChild(element);
 }
 
-function renderComputerGrid() {
-    board.grid.forEach(e => {
+function updateComputerGrid() {
+    computerBoard.grid.forEach(e => {
         e.forEach(e2 => {
-            createComputerGrid(e2, board.grid);
+            createComputerGrid(e2, computerBoard.grid);
         });
     });
 }
@@ -73,7 +82,6 @@ function getSquareNumber(callbackFindIndex) {
     document.querySelectorAll('.gridsquares').forEach(element => {
         element.addEventListener('click', function(e) {
             let squarePicked = e.target.id;
-            console.log(squarePicked);
             callbackFindIndex(squarePicked);
         });
     });
@@ -89,16 +97,13 @@ function findIndex(number) {
             indexarray.push(index);
             confirmText.style.display = 'block';
             confirmText.innerHTML = 'Confirm position: ' + number;
-            console.log(indexarray);
         }
     }
 }
 
 function placeShip(ship, y, x, verticalDirection) {
-    console.log(ship, y, x, verticalDirection);
     let length = ship.getLife();
     let arrayLength = board.grid.length;
-    console.log(arrayLength);
 
     if (length + y > arrayLength || length + x > arrayLength) {
         alert('wrong');
@@ -115,17 +120,56 @@ function placeShip(ship, y, x, verticalDirection) {
             board.grid[y][x + i] = ship.getName();
         }
         currentShip++;
-        console.log('currentship' + currentShip);
     } else {
         for (let i = 0; i < length; i++) {
             board.grid[y + i][x] = ship.getName();
         }
+
         currentShip++;
-        console.log('currentship' + currentShip);
+        console.log(currentShip);
     }
 
     removeGrid();
     updateGrid();
+}
+
+function placeComputerShip(ship) {
+    let y = Math.floor(Math.random() * 10);
+    let x = Math.floor(Math.random() * 10);
+    let verticalDirection = Math.random() >= 0.5;
+    let length = ship.getLife();
+    let arrayLength = computerBoard.grid.length;
+
+    console.log('y' + y + 'x:' + x + verticalDirection + length + arrayLength);
+
+    while (length + y > arrayLength) {
+        y = Math.floor(Math.random() * 10);
+        console.log('whileloop y');
+    }
+
+    while (length + x > arrayLength) {
+        x = Math.floor(Math.random() * 10);
+        console.log('whileloop x');
+    }
+
+    while (!Number.isInteger(computerBoard.grid[y][x])) {
+        console.log('whileloop occupado');
+        y = Math.floor(Math.random() * 10);
+        x = Math.floor(Math.random() * 10);
+    }
+
+    if (!verticalDirection) {
+        for (let i = 0; i < length; i++) {
+            computerBoard.grid[y][x + i] = ship.getName();
+        }
+    } else {
+        for (let i = 0; i < length; i++) {
+            computerBoard.grid[y + i][x] = ship.getName();
+        }
+    }
+
+    removeComputerGrid();
+    updateComputerGrid();
 }
 
 //ändra från  vertical to horizontal
@@ -157,6 +201,7 @@ confirmButton.addEventListener('click', function() {
             );
 
             getSquareNumber(findIndex);
+            placeComputerShip(carrier);
             break;
         case 2:
             placeShip(
@@ -166,14 +211,19 @@ confirmButton.addEventListener('click', function() {
                 verticalDirection,
             );
             getSquareNumber(findIndex);
+            placeComputerShip(battleship);
+
             break;
         case 3:
+            console.log('case3');
             placeShip(
                 cruiser,
                 indexarray[indexarray.length - 2],
                 indexarray[indexarray.length - 1],
                 verticalDirection,
             );
+            placeComputerShip(cruiser);
+
             runPlacingPhase = false; // avslutar placerings fasen
             break;
     }
@@ -181,7 +231,7 @@ confirmButton.addEventListener('click', function() {
 
 //game running
 updateGrid();
-renderComputerGrid();
+updateComputerGrid();
 
 getSquareNumber(findIndex);
 
