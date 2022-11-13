@@ -16,7 +16,7 @@
     "devDependencies": {
         "jest": "^24.9.0",
         "webpack": "^4.41.5",
-        "webpack-cli": "^3.3.10"
+        "webpack-cli": "^3.3.12"
     },
     "dependencies": {
         "jsdom-quokka-plugin": "^1.0.15",
